@@ -5,8 +5,13 @@
 */
 
 #pragma once
+
+#include <vector>
 #include "IntensityImage.h"
 class IntensityImageStudent : public IntensityImage {
+private:
+	std::vector<RGB> vectorRGB;
+
 public:
 	IntensityImageStudent();
 	IntensityImageStudent(const IntensityImageStudent &other);
