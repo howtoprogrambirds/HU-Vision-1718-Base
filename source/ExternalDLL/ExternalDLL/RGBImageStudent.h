@@ -7,9 +7,21 @@
 #pragma once
 #include <vector>
 #include "RGBImage.h"
+
+
+struct RGB_student {
+
+	RGB_student(uint_fast8_t r = 0, uint_fast8_t g = 0, uint_fast8_t b = 0)
+		:r(r), g(g), b(b) {
+	}
+
+	uint_fast8_t r, g, b;
+};
+
+
 class RGBImageStudent : public RGBImage {
 private:
-	std::vector<std::vector<RGB>> vectorRGB;
+	RGB_student RGB ;
 
 public:
 

@@ -18,5 +18,5 @@ struct RGB {
 	unsigned char g;
 	unsigned char r;
 };
-
+b
 typedef unsigned char Intensity;
