@@ -9,24 +9,24 @@
 #include "HereBeDragons.h"
 #include "ImageFactory.h"
 #include "DLLExecution.h"
+#include <chrono>  // for high_resolution_clock
+#include <iostream> //std::cout
 
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
 
-	ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	//ImageFactory::setImplementation(ImageFactory::STUDENT);
+	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
+	ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 
-	ImageIO::debugFolder = "D:\\Users\\Rolf\\Downloads\\FaceMinMin";
+	ImageIO::debugFolder = "C:\\Users\\dylan\\source\\repos\\HU-Vision-1819-Dylan\\meetrapporten\\working";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
 
-
-
 	RGBImage * input = ImageFactory::newRGBImage();
-	if (!ImageIO::loadImage("D:\\Users\\Rolf\\Downloads\\TestA5.jpg", *input)) {
+	if (!ImageIO::loadImage("C:\\Users\\dylan\\source\\repos\\HU-Vision-1819-Dylan\\testsets\\Set A\\TestSet Images\\child-1.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
 		system("pause");
 		return 0;
@@ -61,6 +61,39 @@ int main(int argc, char * argv[]) {
 
 
 bool executeSteps(DLLExecution * executor) {
+
+	using namespace std::chrono;
+
+	typedef std::chrono::high_resolution_clock Clock;
+
+	auto t1 = Clock::now();
+	clock_t start, stop;
+	for (int counter = 0; counter < 2000; ++counter) {
+		static auto t1 = Clock::now();
+		start = clock();
+		executor->executePreProcessingStep1(true);
+		stop = clock();
+
+	}
+	auto t2 = Clock::now();
+
+	duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+
+	std::cout << "Student average duration: " << time_span1.count() / 2000 << '\n';
+
+	auto t3 = Clock::now();
+	for (int counter = 0; counter < 2000; ++counter) {
+		static auto t3 = Clock::now();
+		start = clock();
+		executor->executePreProcessingStep1(false);
+		stop = clock();
+
+	}
+	auto t4 = Clock::now();
+
+	duration<double> time_span2 = duration_cast<duration<double>>(t4 - t3);
+
+	std::cout << "default average duration: " << time_span2.count() / 2000 << '\n';
 
 	//Execute the four Pre-processing steps
 	if (!executor->executePreProcessingStep1(false)) {
@@ -223,3 +256,4 @@ void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features) {
 	ImageIO::saveRGBImage(*debug, ImageIO::getDebugFileName("feature-points-debug.png"));
 	delete debug;
 }
+

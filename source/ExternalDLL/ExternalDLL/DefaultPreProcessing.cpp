@@ -14,6 +14,7 @@ IntensityImage * DefaultPreProcessing::stepToIntensityImage(const RGBImage &src)
 	GrayscaleAlgorithm grayScaleAlgorithm;
 	IntensityImage * image = ImageFactory::newIntensityImage();
 	grayScaleAlgorithm.doAlgorithm(src, *image);
+	ImageIO::saveIntensityImage(*image, "child_1_default.jpg");
 	return image;
 }
 
